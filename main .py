@@ -6,10 +6,10 @@ from dotenv import load_dotenv
 
 app = FastAPI()
 
-# Load environment variables from .env file
+# Load environment variables
 load_dotenv()
 
-# Get the secret key from environment variables
+# Get the secret key 
 secret_key = os.getenv("SECRET_KEY")
 
 # If the secret key is not present, generate one
@@ -26,7 +26,7 @@ try:
 except Exception as e:
     raise ValueError(f"Error creating Fernet key: {str(e)}")
 
-# Endpoint to generate a new key
+#  generate a new key
 @app.get("/generate-key")
 async def generate_key_endpoint():
     try:
@@ -35,7 +35,7 @@ async def generate_key_endpoint():
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Key generation failed: {str(e)}")
 
-# Define the encryption and decryption functions
+# encryption and decryption functions
 def encrypt_data(data: str) -> str:
     encrypted = fernet.encrypt(data.encode())
     return encrypted.decode()
